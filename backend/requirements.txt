@@ -63,3 +63,5 @@ daphne
 channels-redis
 django-redis
 uvicorn
+websockets
+wsproto
