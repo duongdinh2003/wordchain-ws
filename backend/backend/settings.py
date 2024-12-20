@@ -60,17 +60,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'api.login.middleware.UpdateUserActivityMiddleware',
 ]
 AUTHENTICATION_BACKENDS = [
-    'api.login.email_backend.EmailOrUsernameModelBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 CORS_ALLOWED_ORIGINS = [
    'http://localhost:3000', 
    'http://127.0.0.1:3000', 
    'https://engina.duytech.site',
-   'https://api.duytech.site',
    'http://localhost:3007', 
    'http://localhost:3008', 
    'http://localhost:3018',
