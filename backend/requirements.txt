@@ -62,3 +62,4 @@ channels
 daphne
 channels-redis
 django-redis
+uvicorn
