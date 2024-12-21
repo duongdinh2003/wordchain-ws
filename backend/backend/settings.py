@@ -15,7 +15,6 @@ from dotenv import load_dotenv
 from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent
-from celery.schedules import crontab
 
 
 # Quick-start development settings - unsuitable for production
@@ -28,10 +27,9 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG')
+DEBUG = os.getenv('DEBUG') == 'True'
 
-allowed_hosts_str = os.getenv('ALLOWED_HOSTS', '')
-ALLOWED_HOSTS = allowed_hosts_str.split(',')
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 # Application definition
 
 INSTALLED_APPS = [
@@ -44,9 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework_simplejwt',
-    'rest_framework_simplejwt.token_blacklist',
     'rest_framework',
-    'django_celery_beat',
     'game',
 ]
 ########
@@ -75,12 +71,9 @@ CORS_ALLOWED_ORIGINS = [
    'http://localhost:3029', 
    'http://localhost:3009', 
    'http://127.0.0.1:3008', 
-   'http://127.0.0.1:3009',  
-   'http://18.142.230.37', 
+   'http://127.0.0.1:3009',
    'http://localhost:3010', 
    'http://localhost:8081',
-   'http://localhost:19006',
-   'http://localhost:19000',
 ]
 ROOT_URLCONF = 'backend.urls'
 CORS_ALLOW_HEADERS = [
@@ -100,7 +93,7 @@ CORS_ALLOW_METHODS = [
 ]
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=300),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=5),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
@@ -170,18 +163,15 @@ DATABASES = {
         'NAME': os.environ.get('POSTGRES_DB'),
         'USER': os.environ.get('POSTGRES_USER'),
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': os.environ.get('DB_HOST'),  # địa chỉ máy chủ cơ sở dữ liệu
-        # 'HOST':'localhost',
-        'PORT': os.environ.get('DB_PORT'),  # cổng cơ sở dữ liệu
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
     }
 }
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-        
+        'rest_framework_simplejwt.authentication.JWTAuthentication',  
     ),
-
-    
 }
 
 # Password validation
@@ -217,7 +207,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-STATIC_URL = '/static/'  # Đường dẫn truy cập tệp tĩnh
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

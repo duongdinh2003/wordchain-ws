@@ -21,3 +21,5 @@ media/
 staticfiles/
 staticfiles/
 backend/api/vocabulary/Model3
+
+myvenv/
