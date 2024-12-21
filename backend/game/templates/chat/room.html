@@ -25,7 +25,7 @@
       }
 
       const chatSocket = new WebSocket(
-        "ws://" + window.location.host + "/ws/wordchain/"
+        "wss://" + window.location.host + "/ws/wordchain/"
       );
 
       chatSocket.onopen = function (e) {
